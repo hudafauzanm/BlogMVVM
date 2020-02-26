@@ -1,0 +1,186 @@
+﻿@page
+@model Areas.Admin.Pages.IndexAdminModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div id="contact-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Article</h3>
+                </div>
+                <form method="post" role="form">
+                    <div class="modal-body">                
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="rating">Category</label>
+                            <select name="category" id="category" class="form-control">
+                                <option >Horror</option>
+                                <option >Action</option>
+                                <option >Thriller</option>
+                                <option >Comedy</option>
+                                <option >Adventure</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">URL Gambar</label>
+                            <input type="text" name="url_img" id="url_img" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Content</label>
+                            <textarea name="content" id="content" class="form-control"></textarea>
+                        </div>
+                        <input type="text" name="editid" id="editid" hidden>                    
+                    </div>
+                    <div class="modal-footer">                    
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-success" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="delete-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Delete Article</h3>
+                </div>
+                <form method="post" role="form">
+                    <div class="modal-body">                
+                        Yakin Mau Hapus Article ini?
+                        <input type="text" name="deleteid" id="deleteid" hidden>   
+                    </div>
+                    <div class="modal-footer">                    
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-success" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>  
+<div class="row">
+<!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">Articles
+          <small>List Articles</small>
+        </h1>
+
+        @{
+          ViewBag.Article = ViewData["Articles"];
+          foreach(var art in ViewBag.Article)
+          {
+            <div class="card mb-4">
+              <img class="card-img-top" src=@art.url_img alt="Card image cap" width="750px" height="300px">
+              <div class="card-body">
+                <h2 class="card-title">@art.title</h2>
+                <span class="card-text" maxlength="75" >@art.content</span>
+                <br></br>
+                <a href="https://localhost:5001/Admin/Article?id=@art.id" class="btn btn-primary">Read More &rarr;</a>
+                <a href="#" class="btn btn-success" data-toggle="modal" data-target="#contact-modal" data-ide=@art.id data-title="@art.title" data-content="@art.content" data-category=@art.categories data-url=@art.url_img>Edit &rarr;</a>
+                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id=@art.id>Delete &rarr;</a>
+              </div>
+              <div class="card-footer text-muted">
+                Posted on @art.created_at Categories
+                <a href="#">@art.categories</a>
+              </div>
+            </div>
+          }
+        }
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+          <li class="page-item">
+            <a class="page-link" href="#">&larr; Older</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Categories</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">Web Design</a>
+                  </li>
+                  <li>
+                    <a href="#">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#">Freebies</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                  <li>
+                    <a href="#">CSS</a>
+                  </li>
+                  <li>
+                    <a href="#">Tutorials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+          </div>
+        </div>
+
+      </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $('#delete-modal').on('show.bs.modal', function (e) {
+        $('#deleteid').val($(e.relatedTarget).data('id'))
+    })
+   })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#contact-modal').on('show.bs.modal', function (e) {
+        $('#editid').val($(e.relatedTarget).data('ide')),
+        $('#title').val($(e.relatedTarget).data('title')),
+        $('#content').val($(e.relatedTarget).data('content')),
+        $('#category').val($(e.relatedTarget).data('category')),
+        $('#url_img').val($(e.relatedTarget).data('url'))
+    })
+   })
+</script>
