@@ -9,15 +9,15 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Areas.Admin.Pages
+namespace Blog.Pages
 {
-    public class ArticleAdminModel : PageModel
+    public class ArticleModel : PageModel
     {
         public ApplicationDbContext AppDbContext {get;set;}
-        private readonly ILogger<ArticleAdminModel> _logger;
+        private readonly ILogger<ArticleModel> _logger;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public ArticleAdminModel(ILogger<ArticleAdminModel> logger,UserManager<IdentityUser> userManager,ApplicationDbContext appDbContext)
+        public ArticleModel(ILogger<ArticleModel> logger,UserManager<IdentityUser> userManager,ApplicationDbContext appDbContext)
         {
             AppDbContext = appDbContext;
             _userManager = userManager;
@@ -29,6 +29,7 @@ namespace Blog.Areas.Admin.Pages
             var comment = from com in AppDbContext.Comments from user in AppDbContext.Users where com.article_id == id select com;
             var userid = _userManager.GetUserId(User);
             var username = User.Identity.Name;
+            Console.WriteLine(username);
             ViewData["User"] = username;
             ViewData["Comment"] = comment;
             ViewData["ArticleId"] = id;
@@ -48,7 +49,7 @@ namespace Blog.Areas.Admin.Pages
             };
             AppDbContext.Comments.Add(comment);
             await AppDbContext.SaveChangesAsync();
-            return Redirect("https://localhost:5001/Admin/Article?id="+articles_id);
+            return Redirect("https://localhost:5001/Article?id="+articles_id);
         }
 
     }

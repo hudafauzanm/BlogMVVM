@@ -89,3 +89,10 @@ D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Pages\I
 D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Pages\Create.cshtml.g.cs
 D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Pages\Privacy.cshtml.g.cs
 D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Pages\Article.cshtml.g.cs
+D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Pages\Article.cshtml.g.cs
+D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Pages\Role.cshtml.g.cs
+D:\Users\bsi50128\Belajar\Blog\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Google.dll
+D:\Users\bsi50128\Belajar\Blog\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_LayoutUser.cshtml.g.cs
+D:\Users\bsi50128\Belajar\Blog\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Facebook.dll
+D:\Users\bsi50128\Belajar\Blog\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.MicrosoftAccount.dll
+D:\Users\bsi50128\Belajar\Blog\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Twitter.dll

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blog.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Areas.Admin.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class IndexAdminModel : PageModel
     {
         public ApplicationDbContext AppDbContext {get;set;}
@@ -26,7 +28,12 @@ namespace Blog.Areas.Admin.Pages
         public void OnGet()
         { 
             var userid = _userManager.GetUserId(User);
+            Console.WriteLine(userid);
             var articles = from art in AppDbContext.Articles where art.UserId == userid select art;
+            foreach(var art in articles)
+            {
+                Console.WriteLine(art.title);
+            }
             ViewData["Articles"] = articles;
             ViewData["UserId"] = userid;
         }

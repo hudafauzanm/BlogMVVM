@@ -23,7 +23,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Suara Dinding</a>
+      <a class="navbar-brand" href="https://localhost:5001/">Suara Dinding</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,7 +31,7 @@
         <partial name="_LoginPartial" />
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home
+            <a class="nav-link" href="https://localhost:5001/">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -51,10 +51,7 @@
 
   <!-- Page Content -->
   <div class="container">
-
-    <div class="row">
       @RenderBody()
-    </div>
     <!-- /.row -->
 
   </div>
@@ -71,6 +68,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="~/vendor/jquery/jquery.min.js"></script>
   <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   @RenderSection("Scripts", required: false)
 

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Blog.Data;
 using Blog.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Areas.Admin.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class CreateAdminModel : PageModel
     {
         public ApplicationDbContext AppDbContext {get;set;}
@@ -25,10 +27,13 @@ namespace Blog.Areas.Admin.Pages
         public void OnGet()
         {
             var userid = _userManager.GetUserId(User);
+            var username = User.Identity.Name;
+            Console.WriteLine(username);
             ViewData["UserId"] = userid;
+            ViewData["User"] = username;
         }
 
-        public async Task<IActionResult> OnPostAsync(string title,string categories,string content,string url_img,string userid)
+        public async Task<IActionResult> OnPostAsync(string title,string categories,string content,string url_img,string userid,string author)
         {
             Article article = new Article()
             {
@@ -38,6 +43,7 @@ namespace Blog.Areas.Admin.Pages
                 url_img = url_img,
                 UserId = userid,
                 created_at = DateTime.Now,
+                author = author
             };
             AppDbContext.Articles.Add(article);
             await AppDbContext.SaveChangesAsync();
