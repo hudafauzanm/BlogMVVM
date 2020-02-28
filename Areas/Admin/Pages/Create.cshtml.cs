@@ -1,8 +1,10 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Blog.Data;
 using Blog.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -33,19 +35,33 @@ namespace Blog.Areas.Admin.Pages
             ViewData["User"] = username;
         }
 
-        public async Task<IActionResult> OnPostAsync(string title,string categories,string content,string url_img,string userid,string author)
+        public async Task<IActionResult> OnPostAsync(string title,string categories,string content,[FromForm(Name ="url_img")]IFormFile url_img,string userid,string author)
         {
-            Article article = new Article()
+            if(!System.IO.Directory.Exists("wwwroot" + "/Image/"))
             {
-                title = title,
-                categories = categories,
-                content = content,
-                url_img = url_img,
-                UserId = userid,
-                created_at = DateTime.Now,
-                author = author
-            };
-            AppDbContext.Articles.Add(article);
+               System.IO.Directory.CreateDirectory("wwwroot" + "/Image/"); 
+            }
+            string storePath = "wwwroot/Image/";
+            if(url_img != null)
+            {
+               var path = Path.Combine(storePath,url_img.FileName);
+               using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await url_img.CopyToAsync(stream);
+                }
+                var pathfix = path.Substring(8);
+                Article article = new Article()
+                {
+                    title = title,
+                    categories = categories,
+                    content = content,
+                    url_img = pathfix,
+                    UserId = userid,
+                    created_at = DateTime.Now,
+                    author = author
+                };
+                AppDbContext.Articles.Add(article);
+            }
             await AppDbContext.SaveChangesAsync();
             return RedirectToPage("Index");
         }

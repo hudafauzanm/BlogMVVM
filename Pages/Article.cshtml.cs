@@ -25,11 +25,10 @@ namespace Blog.Pages
         }
         public void OnGet(string id)
         {
-            var art = from a in AppDbContext.Articles where a.id == Guid.Parse(id) select a;
-            var comment = from com in AppDbContext.Comments from user in AppDbContext.Users where com.article_id == id select com;
+            var art = from a in AppDbContext.Articles where a.id == Guid.Parse(id) orderby a.created_at select a;
+            var comment = (from com in AppDbContext.Comments from user in AppDbContext.Users where com.article_id == id select com).Distinct();
             var userid = _userManager.GetUserId(User);
             var username = User.Identity.Name;
-            Console.WriteLine(username);
             ViewData["User"] = username;
             ViewData["Comment"] = comment;
             ViewData["ArticleId"] = id;
@@ -45,7 +44,6 @@ namespace Blog.Pages
                 commenter_id = commenter_id,
                 article_id = articles_id,
                 comment_name = commenter_name
-
             };
             AppDbContext.Comments.Add(comment);
             await AppDbContext.SaveChangesAsync();

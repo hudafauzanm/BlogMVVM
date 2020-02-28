@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,14 +30,16 @@ namespace Blog.Areas.Admin.Pages
         public void OnGet()
         {
             var roles = _roleManager.Roles;
-            var user = from us in AppDbContext.Users select us;
-            var user_role = from ur in AppDbContext.UserRoles select ur;
-            foreach(var hasil in user_role)
+            var user = from us in AppDbContext.UserRoles select us.UserId;
+            var userrole = from us in AppDbContext.UserRoles select us;
+            var userunrole = from ur in AppDbContext.Users select ur;
+            ViewData["UnRole"] = userunrole;
+            foreach(var u in user)
             {
-                var nama = from n in AppDbContext.Users where n.Id == hasil.UserId select n.UserName;
-                var role = from r in AppDbContext.Roles where r.Id == hasil.RoleId select r.Name;
-                ViewData["Nama"] = nama;
-                ViewData["RoleUser"] = role;
+                var usesrole = from ur in AppDbContext.Users where ur.Id != u select ur;
+                //var users = from r in AppDbContext.Roles where r.Id == u.RoleId select r;
+                //ViewData["Users"] = users;
+                ViewData["URole"] = usesrole;
             }
             ViewData["Role"] = roles;
             ViewData["User"] = user;
@@ -58,6 +61,8 @@ namespace Blog.Areas.Admin.Pages
             }
             if(user_id != null && roleuser != null)
             {
+                Console.WriteLine(user_id);
+                Console.WriteLine(roleuser);
                 var user = await _userManager.FindByIdAsync(user_id);
                 await _userManager.AddToRoleAsync(user,roleuser);
             }

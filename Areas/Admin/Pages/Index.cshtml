@@ -37,7 +37,7 @@
                     </div>
                     <div class="modal-footer">                    
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-success" id="submit">
+                        <input type="submit" class="btn btn-success">
                     </div>
                 </form>
             </div>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="modal-footer">                    
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-success" id="submit">
+                        <input type="submit" class="btn btn-success">
                     </div>
                 </form>
             </div>
@@ -78,7 +78,9 @@
               <img class="card-img-top" src=@art.url_img alt="Card image cap" width="750px" height="300px">
               <div class="card-body">
                 <h2 class="card-title">@art.title</h2>
-                <span class="card-text" maxlength="75" >@art.content</span>
+                <div style="text-align: justify">
+                  <span class="card-text" maxlength="20" >@art.content</span>
+                </div>
                 <br></br>
                 <a href="https://localhost:5001/Admin/Article?id=@art.id" class="btn btn-primary">Read More &rarr;</a>
                 <a href="#" class="btn btn-success" data-toggle="modal" data-target="#contact-modal" data-ide=@art.id data-title="@art.title" data-content="@art.content" data-category=@art.categories data-url=@art.url_img>Edit &rarr;</a>
@@ -112,9 +114,9 @@
           <h5 class="card-header">Search</h5>
           <div class="card-body">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
+              <input type="text" id="Search" class="form-control" placeholder="Search for...">
               <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
+                <button class="btn btn-secondary" type="submit" onclick="javascript: search()">Go!</button>
               </span>
             </div>
           </div>
@@ -165,6 +167,23 @@
 
       </div>
 </div>
+<script type="text/javascript">
+  function search()
+    {
+        console.log("masuk sini")
+        var search = document.getElementById('Search').value;
+        if(search != "")
+        {
+          var path = '/Admin/Index?Search='+search;
+          window.location.href = path;
+        }
+        else{
+          var path = '/Admin';
+          window.location.href = path;
+        }
+        
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>

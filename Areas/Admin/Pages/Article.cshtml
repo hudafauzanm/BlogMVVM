@@ -22,15 +22,15 @@
               <hr>
       
               <p>Posted on @art.created_at</p>
-      
+              
               <hr>
       
               <img class="img-fluid rounded" src=@art.url_img alt="">
       
               <hr>
-      
-              <span>@art.content</span>
-      
+              <div style="text-align: justify">
+                  <span>@art.content</span>
+              </div>
               <hr>
           }
               
@@ -56,18 +56,39 @@
                   </form>
                 </div>
               </div>
-              @{
+              <div class="card my-4">
+                <h5 class="card-header">Recent Comment</h5>
+                <div class="card-body">
+                  <div class="panel-body">
+                 @{
                   ViewBag.Comment = ViewData["Comment"];
+                  ViewBag.Article = ViewData["Articles"];
                   @foreach(var co in ViewBag.Comment)
                   {
-                      <div class="media mb-4">
-                      <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                          <h5 class="mt-0">@co.comment_name</h5>
-                          <br></br>
-                         @co.comment
-                      </div>
+                      <ul class="list-group">
+                          <li class="list-group-item">
+                              <div class="row">
+                                  <div class="col-xs-2 col-md-3">
+                                      <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
+                                  <div class="col-xs-10 col-md-9">
+                                      <div>
+                                          <div class="mic-info">
+                                              By: <a href="#">@co.comment_name</a>
+                                          </div>
+                                      </div>
+                                      <div class="comment-text">
+                                          @co.comment
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+                      </ul>
                   }
-              }
+                  }
+                  <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>
+                  </div>
+              </div>
+            </div>
       </div>
 
       <!-- Sidebar Widgets Column -->
@@ -78,9 +99,9 @@
           <h5 class="card-header">Search</h5>
           <div class="card-body">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
+              <input type="text" id="Search"class="form-control" placeholder="Search for...">
               <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button" onclick="myFunction()">Go!</button>
+                <button class="btn btn-secondary" type="submit" onclick="javascript: search()">Go!</button>
               </span>
             </div>
           </div>
@@ -134,7 +155,23 @@
     </div>
     <!-- /.row -->
   </div>
-
+<script type="text/javascript">
+  function search()
+    {
+        console.log("masuk sini")
+        var search = document.getElementById('Search').value;
+        if(search != "")
+        {
+          var path = '/Admin/Index?Search='+search;
+          window.location.href = path;
+        }
+        else{
+          var path = '/Admin';
+          window.location.href = path;
+        }
+        
+    }
+</script>
 <script type="text/javascript">
   function myFunction() {
     console.log("masuk sini");

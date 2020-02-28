@@ -26,7 +26,7 @@ namespace Blog.Areas.Admin.Pages
         public void OnGet(string id)
         {
             var art = from a in AppDbContext.Articles where a.id == Guid.Parse(id) select a;
-            var comment = from com in AppDbContext.Comments from user in AppDbContext.Users where com.article_id == id select com;
+            var comment = (from com in AppDbContext.Comments from user in AppDbContext.Users where com.article_id == id select com).Distinct();
             var userid = _userManager.GetUserId(User);
             var username = User.Identity.Name;
             ViewData["User"] = username;

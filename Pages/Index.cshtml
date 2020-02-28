@@ -21,7 +21,9 @@
               <img class="card-img-top" src=@art.url_img alt="Card image cap" width="750px" height="300px">
               <div class="card-body">
                 <h2 class="card-title">@art.title</h2>
-                <span class="card-text" maxlength="75" >@art.content</span>
+                <div style="text-align: justify">
+                  <span class="card-text" style="display: inline-block;text-overflow: ellipsis;word-wrap: break-word;overflow: hidden;max-height: 5.9em;line-height: 1.4em;" >@art.content</span>
+                </div>
                 <br></br>
                 <a href="https://localhost:5001/Article?id=@art.id" class="btn btn-primary">Read More &rarr;</a>
               </div>
@@ -53,9 +55,9 @@
           <h5 class="card-header">Search</h5>
           <div class="card-body">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
+              <input type="text" id="Search"class="form-control" placeholder="Search for...">
               <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
+                <button class="btn btn-secondary" type="submit" onclick="javascript: search_btn()">Go!</button>
               </span>
             </div>
           </div>
@@ -106,3 +108,19 @@
 
       </div>
 
+<script type="text/javascript">
+  function search_btn()
+    {
+        var search = document.getElementById('Search').value;
+        if(search != "")
+        {
+          var path = '/Index?Search='+search;
+          window.location.href = path;
+        }
+        else{
+          var path = '/';
+          window.location.href = path;
+        }
+        
+    }
+</script>

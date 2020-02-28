@@ -24,7 +24,7 @@ namespace Blog.Pages
             _logger = logger;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string Search ="")
         {
             var userid = _userManager.GetUserId(User);
             var userrole = from x in AppDbContext.UserRoles where x.UserId == userid select x.RoleId;
@@ -32,21 +32,37 @@ namespace Blog.Pages
             {
                 if(u == "6fc7c074-162c-4cfe-976a-c3247c85eb9c")
                 {
-                    var article = from art in AppDbContext.Articles orderby art.created_at descending select art;
-                    ViewData["Articles"] = article;
+                    if(!String.IsNullOrEmpty(Search) || !String.IsNullOrWhiteSpace(Search))
+                    {
+                        var articl = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+                        ViewData["Articles"] = articl;
+                    }
+                    var articles = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+                    ViewData["Articles"] = articles;
                 }
                 if(u == "a968363c-7a6d-43fe-aed3-5cf08c65e092")
                 {
-                    var article = from art in AppDbContext.Articles orderby art.created_at descending select art;
-                    ViewData["Articles"] = article;
+                    if(!String.IsNullOrEmpty(Search) || !String.IsNullOrWhiteSpace(Search))
+                    {
+                        var articl = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+                        ViewData["Articles"] = articl;
+                    }
+                    var article1 = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+                    ViewData["Articles"] = article1;
                 }
                 if(u == "ff6245f1-8088-4f48-9c20-81021f6c4f7b")
                 {
                     return Redirect("https://localhost:5001/Admin");
                 }
             }
-            var articles = from art in AppDbContext.Articles orderby art.created_at descending select art;
-            ViewData["Articles"] = articles;
+            if(!String.IsNullOrEmpty(Search) || !String.IsNullOrWhiteSpace(Search))
+            {
+                Console.WriteLine(Search);
+                var articl = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+                ViewData["Articles"] = articl;
+            }
+            var article = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+            ViewData["Articles"] = article;
             return Page();
         }
     }

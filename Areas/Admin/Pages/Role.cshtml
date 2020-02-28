@@ -1,7 +1,12 @@
 @page
 @model Areas.Admin.Pages.RoleAdminModel
 <div class="row">
+<div style="position: relative; padding :5px; ">
 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#create-role">Create Role</a>
+</div>
+<div style="position: relative; padding :5px; ">
+<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add-role">Add User Role</a>
+</div>
 <div id="create-role" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -45,7 +50,7 @@
 </table>
 </div>
 <div class="row">
-<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add-role">Add User Role</a>
+
 <div id="add-role" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -56,24 +61,25 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Role</label>                
-                    <select name="user_id" class="form-control">
-                      @{
-                          ViewBag.User = ViewData["User"];
-                          @foreach (var user in ViewBag.User)
+                    <select name="roleuser" class="form-control">
+                      
+                        @{
+                          ViewBag.Role = ViewData["Role"];
+                          @foreach (var role in ViewBag.Role)
                           {
-                            <option value=@user.Id>@user.UserName</option>
+                            <option>@role.Name</option>
                           }
                         }
                     </select>
                   </div>
                   <div class="form-group">
                     <label>User List</label>                
-                    <select name="roleuser" class="form-control">
-                      @{
-                          ViewBag.Role = ViewData["Role"];
-                          @foreach (var role in ViewBag.Role)
+                    <select name="user_id" class="form-control">
+                        @{
+                          ViewBag.User = ViewData["UnRole"];
+                          @foreach (var user in ViewBag.User)
                           {
-                            <option>@role.Name</option>
+                            <option value=@user.Id>@user.UserName</option>
                           }
                         }
                     </select>
@@ -86,26 +92,25 @@
             </form>
         </div>
     </div>
-</div>  
-<table class="table">
+</div>
+@* <table class="table">
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Username</th>
-      <th scope="col">Role</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col">User</th>
     </tr>
   </thead>
   <tbody>
-    
-        <tr>
-        <td>1<td>
-        <td></td>
-        <td></td>
-        <td><button type="button" class="btn btn-primary">Update</button></td>
-        <td><button type="button" class="btn btn-danger">Delete</button></td>
-        </tr>
+      @{
+        ViewBag.Role = ViewData["URole"];
+        @foreach (var role in ViewBag.Role)
+        {
+          <tr>
+            <td></td>
+            <td>@role.UserName</td>
+          </tr>
+        }
+      }
   </tbody>
-</table>
+</table> *@
 </div>

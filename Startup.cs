@@ -49,6 +49,12 @@ namespace Blog
             {
                 microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+            })
+            .AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerAPIKey"];
+                twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+                twitterOptions.RetrieveUserDetails = true;
             });
             services.AddRazorPages();
         }

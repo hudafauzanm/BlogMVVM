@@ -25,16 +25,16 @@ namespace Blog.Areas.Admin.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public void OnGet(string Search="")
         { 
             var userid = _userManager.GetUserId(User);
-            Console.WriteLine(userid);
-            var articles = from art in AppDbContext.Articles where art.UserId == userid select art;
-            foreach(var art in articles)
+            if(!String.IsNullOrEmpty(Search) || !String.IsNullOrWhiteSpace(Search))
             {
-                Console.WriteLine(art.title);
+                var articl = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+                ViewData["Articles"] = articl;
             }
-            ViewData["Articles"] = articles;
+            var article = from art in AppDbContext.Articles where art.title.Contains(Search) || art.content.Contains(Search) orderby art.created_at descending select art;
+            ViewData["Articles"] = article;
             ViewData["UserId"] = userid;
         }
 
@@ -42,14 +42,12 @@ namespace Blog.Areas.Admin.Pages
         {
             if(deleteid != null)
             {
-                Console.WriteLine("masuk delete");
                 var iddelete = Guid.Parse(deleteid);
                 var delete = AppDbContext.Articles.Find(iddelete);
                 AppDbContext.Remove(delete);
             }
             if(editid != null)
             {
-                Console.WriteLine("Masuk edit");
                 var idedit = Guid.Parse(editid);
                 var edit = AppDbContext.Articles.Find(idedit);
                 edit.title = title;
